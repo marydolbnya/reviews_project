@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>О пользователе</h2>
+<br>
+<div class="card">
+{% if user.id == current_user.id %}
+  <form action="" method="post" enctype="multipart/form-data">
+{% endif %}
+  <div class="card-header">
+    {{user.surname}} {{user.name}}
+  </div>
+  <div class="card-body">
+    <img class="avatar_full" src="/static/img/avatar_for_id_{{ user.id }}.jpg" alt="">
+{% if user.id == current_user.id %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="surname">Сменить аватар</span>
+        </div>
+        <input type="file" name="avatar" class="form-control">
+    </div>
+{% endif %}
+    <br>
+    <br>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="surname">Фамилия</span>
+        </div>
+        <input type="text" name="surname" value="{{ user.surname }}" class="form-control" {% if user.id != current_user.id %}readonly{% endif %}>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Имя</span>
+        </div>
+        <input type="text" name="name" value="{{ user.name }}" class="form-control" {% if user.id != current_user.id %}readonly{% endif %}>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Возраст</span>
+        </div>
+        <input type="text" name="age" value="{{ user.age }}" class="form-control" {% if user.id != current_user.id %}readonly{% endif %}>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Почта</span>
+        </div>
+        <input type="email" name="email" value="{{ user.email }}" class="form-control" {% if user.id != current_user.id %}readonly{% endif %}>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Дополнительно</span>
+        </div>
+        <textarea class="form-control" name="about" {% if user.id != current_user.id %}readonly{% endif %}>{{ user.about }}</textarea>
+    </div>
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer">Зарегистрирован: {{ user.registration_date }}</footer>
+    </blockquote>
+    <br>
+{% if user.id == current_user.id %}
+    <div class="input-group mb-3">
+        <input type="submit" class="form-control" value="Сохранить">
+    </div>
+  </form>
+{% endif %}
+  </div>
+</div>
+{% endblock %}

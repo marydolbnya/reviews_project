@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="card">
+  <div class="card-header">
+    {{review.title}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><img class="avatar_thumb" src="/static/img/avatar_for_id_{{ review.author.id }}.jpg" alt=""><a href="/user/{{ review.author.id }}">{{review.author.surname}} {{review.author.name}}</a></h5>
+    <table>
+      <tr>
+{% for photo in photos %}
+    <td>
+      <img class="review_photo" src="/static/img/photo_for_id_{{ photo.id }}.jpg">
+      <p>
+        <a href="/review_photo_del/{{ photo.id }}" class="btn btn-secondary btn-danger btn-sm">Удалить</a>
+      </p>
+    </td>
+{% endfor %}
+      </tr>
+    </table>
+    <p class="card-text">{{review.text}}</p>
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer">Добавлено: {{review.creation_date}}</footer>
+    </blockquote>
+    <br>
+{% if current_user.is_authenticated and current_user.id == review.author_id %}
+    <a href="/review_del/{{ review.id }}" class="btn btn-primary btn-danger">Удалить</a>
+    <a href="/review_edit/{{ review.id }}" class="btn btn-primary">Редактировать</a>
+    <a href="/review_add_photo/{{ review.id }}" class="btn btn-primary">Добавить фото</a>
+    <br>
+{% endif %}
+    <br>
+    <a href="/comment_add/{{ review.id }}" class="btn btn-primary">Комментировать</a>
+  </div>
+</div>
+<br>
+{% for comment in comments %}
+<div class="card">
+  <div class="card-header">
+    Комментарий от {{comment.creation_date}}
+  </div>
+  <div class="card-body">
+    <h6 class="card-title"><img class="avatar_thumb" src="/static/img/avatar_for_id_{{ comment.author.id }}.jpg" alt=""><a href="/user/{{ comment.author.id }}">{{comment.author.surname}} {{comment.author.name}}</a></h6>
+    <p class="card-text">{{comment.text}}</p>
+{% if current_user.is_authenticated and current_user.id == comment.author_id %}
+    <a href="/comment_del/{{ comment.id }}" class="btn btn-primary">Удалить</a>
+    <a href="/comment_edit/{{ comment.id }}" class="btn btn-primary">Редактировать</a>
+    <br>
+{% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
