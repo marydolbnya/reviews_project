@@ -60,7 +60,7 @@ def reqister():
 
         out_file_name = f"img/avatar_for_id_{user.id}.jpg"
         if form.avatar.data:
-            request.files[form.avatar.name].save(url_for("static", filename=out_file_name)[1:])
+            request.files[form.avatar.name].save("./" + url_for("static", filename=out_file_name)[1:])
 
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
@@ -109,7 +109,7 @@ def user(user_id):
             file = request.files.get("avatar", None)
             if file and file.filename and file.filename.endswith(".jpg"):
                 out_file_name = f"img/avatar_for_id_{user.id}.jpg"
-                file.save(url_for("static", filename=out_file_name)[1:])
+                file.save("./" + url_for("static", filename=out_file_name)[1:])
             db_sess.commit()
     return redirect('/')
 
@@ -175,7 +175,7 @@ def review_add_photo(review_id):
 
             out_file_name = f"img/photo_for_id_{photo.id}.jpg"
             if form.photo.data:
-                request.files[form.photo.name].save(url_for("static", filename=out_file_name)[1:])
+                request.files[form.photo.name].save("./" + url_for("static", filename=out_file_name)[1:])
     return redirect(f"/review/{review_id}")
 
 
@@ -187,7 +187,7 @@ def review_photo_del(photo_id):
     if photo:
         review = db_sess.query(Review).filter(Review.id == photo.review_id).first()
         if review and review.author_id == current_user.id:
-            fname = f"static/img/photo_for_id_{photo_id}.jpg"
+            fname = f"./static/img/photo_for_id_{photo_id}.jpg"
             if os.path.isfile(fname):
                 os.remove(fname)
             db_sess.delete(photo)
@@ -205,7 +205,7 @@ def review_del(review_id):
         for comment in db_sess.query(Comment).filter(review_id == Comment.review_id).all():
             db_sess.delete(comment)
         for photo in db_sess.query(Photo).filter(review_id == Photo.review_id).all():
-            fname = f"static/img/photo_for_id_{photo.id}.jpg"
+            fname = f"./static/img/photo_for_id_{photo.id}.jpg"
             if os.path.isfile(fname):
                 os.remove(fname)
             db_sess.delete(photo)

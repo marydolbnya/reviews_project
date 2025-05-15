@@ -50,12 +50,12 @@ class UserResource(Resource):
         user = db_sess.query(User).get(user_id)
         for review in db_sess.query(Review).filter(Review.author_id == user_id).all():
             for photo in db_sess.query(Photo).filter(Photo.review_id == review.id).all():
-                fname = f"static/img/photo_for_id_{photo.id}.jpg"
+                fname = f"./static/img/photo_for_id_{photo.id}.jpg"
                 if os.path.isfile(fname):
                     os.remove(fname)
                 db_sess.delete(photo)
             db_sess.delete(review)
-        fname = f"static/img/avatar_for_id_{user.id}.jpg"
+        fname = f"./static/img/avatar_for_id_{user.id}.jpg"
         if os.path.isfile(fname):
             os.remove(fname)
         db_sess.delete(user)

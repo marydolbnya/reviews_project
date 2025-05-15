@@ -45,7 +45,7 @@
     <h6 class="card-title"><img class="avatar_thumb" src="/static/img/avatar_for_id_{{ comment.author.id }}.jpg" alt=""><a href="/user/{{ comment.author.id }}">{{comment.author.surname}} {{comment.author.name}}</a></h6>
     <p class="card-text">{{comment.text}}</p>
 {% if current_user.is_authenticated and current_user.id == comment.author_id %}
-    <a href="/comment_del/{{ comment.id }}" class="btn btn-primary">Удалить</a>
+    <a href="/comment_del/{{ comment.id }}" class="btn btn-primary btn-danger">Удалить</a>
     <a href="/comment_edit/{{ comment.id }}" class="btn btn-primary">Редактировать</a>
     <br>
 {% endif %}

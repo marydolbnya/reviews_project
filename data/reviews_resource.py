@@ -44,7 +44,7 @@ class ReviewResource(Resource):
         db_sess = db_session.create_session()
         review = db_sess.query(Review).get(review_id)
         for photo in db_sess.query(Photo).filter(Photo.review_id == review.id).all():
-            fname = f"static/img/photo_for_id_{photo.id}.jpg"
+            fname = f"./static/img/photo_for_id_{photo.id}.jpg"
             if os.path.isfile(fname):
                 os.remove(fname)
             db_sess.delete(photo)
