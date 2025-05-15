@@ -18,8 +18,10 @@
       <footer class="blockquote-footer">Добавлено: {{review.creation_date}}</footer>
     </blockquote>
     <br>
-{% if current_user.is_authenticated and current_user.id == review.author_id %}
+{% if current_user.is_authenticated %}
     <a href="/review/{{ review.id }}" class="btn btn-primary">Просмотр</a>
+{% endif %}
+{% if current_user.is_authenticated and current_user.id == review.author_id %}
     <a href="/review_del/{{ review.id }}" class="btn btn-primary btn-danger">Удалить</a>
     <a href="/review_edit/{{ review.id }}" class="btn btn-primary">Редактировать</a>
 {% endif %}
