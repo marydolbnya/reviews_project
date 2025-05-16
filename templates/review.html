@@ -13,9 +13,11 @@
 {% for photo in photos %}
     <td>
       <img class="review_photo" src="/static/img/photo_for_id_{{ photo.id }}.jpg">
+{% if current_user.is_authenticated and current_user.id == review.author_id %}
       <p>
         <a href="/review_photo_del/{{ photo.id }}" class="btn btn-secondary btn-danger btn-sm">Удалить</a>
       </p>
+{% endif %}
     </td>
 {% endfor %}
       </tr>
